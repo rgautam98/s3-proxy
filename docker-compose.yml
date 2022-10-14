@@ -1,5 +1,5 @@
 # Reference: https://docs.docker.com/compose/compose-file/
-# version: '3.6'
+version: '3.3'
 services:
   proxy:
     image: ghcr.io/rgautam98/s3-proxy:master

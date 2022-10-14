@@ -1,0 +1,35 @@
+name: Manually change image registry
+
+on:
+  workflow_dispatch:
+    inputs:
+      image:
+        description: 'Image'
+        required: true
+      old_tag:
+        description: 'old_tag'
+        required: true
+      new_tag:
+        description: 'new_tag'
+        required: true
+
+
+
+jobs:
+  # Push image to GitHub Packages.
+  # See also https://docs.docker.com/docker-hub/builds/
+  push:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Log in to registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+      - name: Push new image to registry
+        run: |
+          docker pull "${{ inputs.image }}:${{ inputs.old_tag }}"
+          docker tag "${{ inputs.image }}:${{ inputs.old_tag }}" "${{ inputs.image }}:${{ inputs.new_tag }}"
+          docker push "${{ inputs.image }}:${{ inputs.new_tag }}"

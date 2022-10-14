@@ -1,0 +1,18 @@
+# Reference: https://docs.docker.com/compose/compose-file/
+# version: '3.6'
+services:
+  proxy:
+    image: ghcr.io/rgautam98/s3-proxy:master
+    ports:
+    - "3000:3000"
+    restart: always
+    environment:
+      SOURCE_S3_ENDPOINT: 'https://mysource.com'
+      SOURCE_BUCKET: 'mybucket'
+      SOURCE_ACCESS_KEY_ID: 'myaccesskey'
+      SOURCE_SECRET_ACCESS_KEY: 'mysecretkey'
+
+      DESTINATION_S3_ENDPOINT: 'https://mydestination.com'
+      DESTINATION_BUCKET: 'mybucket'
+      DESTINATION_ACCESS_KEY_ID: 'myaccesskey'
+      DESTINATION_SECRET_ACCESS_KEY: 'mysecretkey'
